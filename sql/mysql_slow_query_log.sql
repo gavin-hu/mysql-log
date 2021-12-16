@@ -1,5 +1,6 @@
 CREATE TABLE `mysql_slow_query_log` (
     `id` int NOT NULL auto_increment,
+    `md5` VARCHAR(64) NOT NULL comment 'md5',
     `datetime` DATETIME NOT NULL comment '执行时间',
     `database` VARCHAR(50) NULL comment '数据库',
     `user`  VARCHAR(50) NULL comment '数据库用户',
@@ -10,5 +11,6 @@ CREATE TABLE `mysql_slow_query_log` (
     `rows_examined` INT DEFAULT NULL comment '扫描总行数',
     `rows_sent` INT DEFAULT NULL comment '返回总行数',
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`md5`)
 );

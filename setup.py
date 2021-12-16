@@ -28,7 +28,7 @@ setuptools.setup(
     include_package_data=True,
     # This file is required to inform mypy that inline type hints are used.
     #   See: https://mypy.readthedocs.io/en/stable/installed_packages.html
-    #package_data={"fact": ["py.typed"]},
+    # package_data={"fact": ["py.typed"]},
     # This is a trick to avoid duplicating dependencies between both setup.py and
     # requirements.txt.
     # requirements.txt must be included in MANIFEST.in for this to work.
@@ -50,5 +50,5 @@ setuptools.setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
-    entry_points={"console_scripts": ["mysqlog=cli:main"]},
+    entry_points={"console_scripts": ["mysqlog=mysqlog.cli:app"]},
 )
