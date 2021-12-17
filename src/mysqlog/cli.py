@@ -12,7 +12,7 @@ app = typer.Typer()
 
 
 @app.command()
-def db(
+def main(
     logpath: str,
     user: str = typer.Option(..., "-u", "--user"),
     password: str = typer.Option(..., "-p", "--password"),
