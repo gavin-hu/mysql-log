@@ -1,6 +1,7 @@
 CREATE TABLE `mysql_slow_query_log` (
     `id` int NOT NULL auto_increment,
     `md5` VARCHAR(64) NOT NULL comment 'md5',
+    `env` VARCHAR(64) NOT NULL DEFAULT 'default' comment '环境'
     `datetime` DATETIME NOT NULL comment '执行时间',
     `database` VARCHAR(50) NULL comment '数据库',
     `user`  VARCHAR(50) NULL comment '数据库用户',

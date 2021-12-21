@@ -8,7 +8,7 @@ project_dir = Path(__file__).parent
 
 setuptools.setup(
     name="mysqlog",
-    version="1.0.2",
+    version="1.0.3",
     description="MySQL Log",
     # Use UTF-8 encoding for README even on Windows by using the encoding argument.
     long_description=project_dir.joinpath("README.md").read_text(encoding="utf-8"),
