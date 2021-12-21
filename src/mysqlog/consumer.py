@@ -1,26 +1,33 @@
 import hashlib
 import pymysql
 import threading
+#
+from datetime import datetime
 
 
 class SlowQueryLogConsumer(threading.Thread):
     def __init__(self, queue, **config):
         threading.Thread.__init__(self, name=config["name"])
         self.queue = queue
-        self.env = config["env"]
-        self.connection = pymysql.connect(
-            host=config["host"],
-            port=config["port"],
-            user=config["user"],
-            password=config["password"],
-            database=config["database"],
-            cursorclass=pymysql.cursors.DictCursor,
-        )
+        self.config = config
 
     def run(self):
         #
+        self.connection = pymysql.connect(
+            host=self.config["host"],
+            port=self.config["port"],
+            user=self.config["user"],
+            password=self.config["password"],
+            database=self.config["database"],
+            cursorclass=pymysql.cursors.DictCursor,
+        )
+        #
         while True:
             entry = self.queue.get()
+            #
+            if self.config["since"] and entry["datetime"] < datetime.strptime(self.config["since"], "%Y-%m-%d %H:%M:%S"): 
+                print("skip: " + entry)
+                continue
             #
             with self.connection.cursor() as cursor:
                 entry["md5"] = hashlib.md5(
@@ -35,7 +42,7 @@ class SlowQueryLogConsumer(threading.Thread):
                     insert_sql,
                     (
                         entry["md5"],
-                        self.env,
+                        self.config["env"],
                         entry["datetime"],
                         entry["database"],
                         entry["user"],

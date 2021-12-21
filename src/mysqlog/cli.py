@@ -2,7 +2,6 @@
 
 import typer
 import queue
-
 #
 from mysqlog.producer import SlowQueryLogProducer
 from mysqlog.consumer import SlowQueryLogConsumer
@@ -20,11 +19,13 @@ def main(
     host: str = typer.Option("localhost", "-h", "--host"),
     port: int = typer.Option(3306, "-P", "--port"),
     database: str = typer.Option("test", "-d", "--database"),
-    threadSize: int = typer.Option(1, "-t", "--thread-size")
+    threadSize: int = typer.Option(1, "-t", "--thread-size"),
+    since: type.Optional[str]  = typer.Option(None, "-s", "--since"),
 ):
+    #
     f = open(logpath)
     q = queue.Queue(100)
-
+    #
     producer = SlowQueryLogProducer(f, q)
     producer.start()
     #
@@ -32,7 +33,7 @@ def main(
         name = "SlowQueryLogConsumer" + str(i)
         #
         consumer = SlowQueryLogConsumer(
-            q, name=name, env=env, host=host, port=port, user=user, password=password, database=database
+            q, name=name, env=env, host=host, port=port, user=user, password=password, database=database, since=since
         )
         #
         consumer.start()
