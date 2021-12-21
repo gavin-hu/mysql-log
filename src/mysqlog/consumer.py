@@ -1,7 +1,7 @@
 import hashlib
 import pymysql
 import threading
-#
+
 from datetime import datetime
 
 
@@ -25,7 +25,9 @@ class SlowQueryLogConsumer(threading.Thread):
         while True:
             entry = self.queue.get()
             #
-            if self.config["since"] and entry["datetime"] < datetime.strptime(self.config["since"], "%Y-%m-%d %H:%M:%S"): 
+            if self.config["since"] and entry["datetime"] < datetime.strptime(
+                self.config["since"], "%Y-%m-%d %H:%M:%S"
+            ):
                 print("skip: " + str(entry))
                 continue
             #
