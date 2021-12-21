@@ -20,7 +20,7 @@ def main(
     port: int = typer.Option(3306, "-P", "--port"),
     database: str = typer.Option("test", "-d", "--database"),
     threadSize: int = typer.Option(1, "-t", "--thread-size"),
-    since: type.Optional[str]  = typer.Option(None, "-s", "--since"),
+    since: str  = typer.Option(None, "-s", "--since"),
 ):
     #
     f = open(logpath)

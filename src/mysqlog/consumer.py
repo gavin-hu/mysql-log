@@ -26,7 +26,7 @@ class SlowQueryLogConsumer(threading.Thread):
             entry = self.queue.get()
             #
             if self.config["since"] and entry["datetime"] < datetime.strptime(self.config["since"], "%Y-%m-%d %H:%M:%S"): 
-                print("skip: " + entry)
+                print("skip: " + str(entry))
                 continue
             #
             with self.connection.cursor() as cursor:
