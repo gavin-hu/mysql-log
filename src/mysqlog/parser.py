@@ -13,9 +13,9 @@ _HEADER_VERSION_CRE = re.compile(r"(.+), Version: (\d+)\.(\d+)\.(\d+)(?:-(\S+))?
 _HEADER_SERVER_CRE = re.compile(r"Tcp port:\s*(\d+)\s+Unix socket:\s+(.*)")
 # Time: 2020-09-25T05:43:35.66
 _SLOW_TIMESTAMP_CRE = re.compile(r"#\s+Time:\s+(" + _DATE_PAT + r")")
-# User@Host: root[root] @  [::1]  Id: 16297
+# User@Host: skip-grants user[root] @  [10.190.37.163]  Id: 28435
 _SLOW_USERHOST_CRE = re.compile(
-    r"#\s+User@Host:\s+"
+    r"#\s+User@Host:\s+[\w,-]*\s*"
     r"(?:([\w\d]+))?\s*"
     r"\[\s*([\w\d]+)\s*\]\s*"
     r"@\s*"
@@ -577,7 +577,7 @@ class SlowQueryLog(LogParserBase):
             if line is None:
                 break
             if line.startswith("use"):
-                entry["database"] = self._current_database = line.split(" ")[1]
+                entry["database"] = self._current_database = line.split(" ")[1].replace(";", "")
             elif line.startswith("SET timestamp="):
                 entry["datetime"] = datetime.datetime.fromtimestamp(int(line[14:].strip(";")))
             elif (
@@ -733,6 +733,6 @@ class SlowQueryLogEntry(LogEntryBase):
         except AttributeError:
             param["datetime"] = ""
         return (
-            "<%(class_name)s %(datetime)s [%(user)s@%(host)s] %(database)s"
+            "<%(class_name)s %(datetime)s [%(user)s@%(host)s] %(database)s "
             "%(query_time)s/%(lock_time)s/%(rows_examined)s/%(rows_sent)s>"
         ) % param

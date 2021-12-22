@@ -20,12 +20,13 @@ def main(
     database: str = typer.Option("test", "-d", "--database"),
     threadSize: int = typer.Option(1, "-t", "--thread-size"),
     since: str = typer.Option(None, "-s", "--since"),
+    queryTime: float = typer.Option(0.3, "-T", "--query-time"),
 ):
     #
     f = open(logpath)
     q = queue.Queue(100)
     #
-    producer = SlowQueryLogProducer(f, q)
+    producer = SlowQueryLogProducer(f, q, queryTime=queryTime)
     producer.start()
     #
     for i in range(threadSize):
