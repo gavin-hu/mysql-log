@@ -9,15 +9,24 @@ Arguments:
   LOGPATH  [required]
 
 Options:
-  -e, --env TEXT                  [default: default]
-  -u, --user TEXT                 [required]
-  -p, --password TEXT             [required]
-  -h, --host TEXT                 [default: localhost]
-  -P, --port INTEGER              [default: 3306]
-  -d, --database TEXT             [default: test]
-  -t, --thread-size INTEGER       [default: 1]
-  -s, --since TEXT
-  -T, --query-time FLOAT          [default: 0.3]
+  -e, --env TEXT                  The environment of mysql log to collect
+                                  [default: default]
+  -u, --user TEXT                 The user of database for collecting
+                                  [required]
+  -p, --password TEXT             The password of database for collecting
+                                  [required]
+  -h, --host TEXT                 The host of database for collecting mysql
+                                  log  [default: localhost]
+  -P, --port INTEGER              The port of database for collecting mysql
+                                  log  [default: 3306]
+  -d, --database TEXT             The database for collecting mysql log
+                                  [default: test]
+  -t, --thread-size INTEGER       The thread size of SlowQueryLogConsumer
+                                  [default: 1]
+  -s, --since TEXT                Filter mysql log by datatime yyyy-MM-dd
+                                  HH:mm:ss
+  -T, --query-time FLOAT          Filter mysql log by query_time  [default:
+                                  0.3]
   --install-completion [bash|zsh|fish|powershell|pwsh]
                                   Install completion for the specified shell.
   --show-completion [bash|zsh|fish|powershell|pwsh]
