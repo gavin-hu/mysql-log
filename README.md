@@ -16,6 +16,8 @@ Options:
   -P, --port INTEGER              [default: 3306]
   -d, --database TEXT             [default: test]
   -t, --thread-size INTEGER       [default: 1]
+  -s, --since TEXT
+  -T, --query-time FLOAT          [default: 0.3]
   --install-completion [bash|zsh|fish|powershell|pwsh]
                                   Install completion for the specified shell.
   --show-completion [bash|zsh|fish|powershell|pwsh]
