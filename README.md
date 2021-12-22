@@ -98,7 +98,7 @@ mysql> show tables;
 3. Run MySQLog
 
 ``` bash
-mysqlog -uroot -p123456 -hlocalhost -dtest mysql-slow.log
+mysqlog -uroot -p123456 -hlocalhost -P3306 -dtest -t2 -T0.5 -s"2021-01-01 00:00:00" mysql-slow.log
 ```
 
 
