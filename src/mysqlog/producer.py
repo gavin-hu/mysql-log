@@ -1,7 +1,14 @@
 import time
+import datetime
 import threading
+import subprocess
+
+from shutil import which
 
 from mysqlog.parser import SlowQueryLog
+
+
+PT_FINGERPRINT_EXISTS = which("pt-fingerprint")
 
 
 class SlowQueryLogProducer(threading.Thread):
@@ -17,10 +24,31 @@ class SlowQueryLogProducer(threading.Thread):
             try:
                 entry = self.parser.next()
                 #
+                if self.config["since"] and entry["datetime"] < datetime.strptime(
+                    self.config["since"], "%Y-%m-%d %H:%M:%S"
+                ):
+                    print("skip: " + str(entry))
+                    continue
+                #
                 if self.config["queryTime"] > entry["query_time"]:
                     continue
+                #
+                if self.config["fingerprint"] and PT_FINGERPRINT_EXISTS:
+                    entry["fingerprint"] = self.get_fingerprint(entry["query"])
                 #
                 self.queue.put(entry)
             except StopIteration:
                 print("No more log, just sleep 5 seconds")
                 time.sleep(1)
+
+    def get_fingerprint(self, query):
+        #
+        output = subprocess.run(
+            ["pt-fingerprint", "--query", query],
+            stdout=subprocess.PIPE,
+        )
+        #
+        if output.stdout:
+            return output.stdout.decode("utf-8").strip()
+        else:
+            return None

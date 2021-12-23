@@ -37,12 +37,17 @@ def main(
     queryTime: float = typer.Option(
         0.3, "-T", "--query-time", help="Filter mysql log by query_time"
     ),
+    fingerprint: bool = typer.Option(
+        False, "--enable-fingerprint", help="Enable query sql fingerprint"
+    ),
 ):
     #
     f = open(logpath)
     q = queue.Queue(100)
     #
-    producer = SlowQueryLogProducer(f, q, queryTime=queryTime)
+    producer = SlowQueryLogProducer(
+        f, q, since=since, queryTime=queryTime, fingerprint=fingerprint
+    )
     producer.start()
     #
     for i in range(threadSize):
@@ -57,7 +62,6 @@ def main(
             user=user,
             password=password,
             database=database,
-            since=since,
         )
         #
         consumer.start()

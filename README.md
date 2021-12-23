@@ -3,13 +3,7 @@
 MySQLog is command line program used to collect mysql slow query log like Porcona Toolkit's pt-query-digest.
 
 ``` bash
-Usage: mysqlog [OPTIONS] LOGPATH
-
-Arguments:
-  LOGPATH  [required]
-
-Options:
-  -e, --env TEXT                  The environment of mysql log to collect
+-e, --env TEXT                  The environment of mysql log to collect
                                   [default: default]
   -u, --user TEXT                 The user of database for collecting
                                   [required]
@@ -27,6 +21,7 @@ Options:
                                   HH:mm:ss
   -T, --query-time FLOAT          Filter mysql log by query_time  [default:
                                   0.3]
+  --enable-fingerprint            Enable query sql fingerprint
   --install-completion [bash|zsh|fish|powershell|pwsh]
                                   Install completion for the specified shell.
   --show-completion [bash|zsh|fish|powershell|pwsh]
@@ -83,6 +78,7 @@ mysql> CREATE TABLE `mysql_slow_query_log` (
         `database` VARCHAR(50) NULL comment '数据库',
         `user`  VARCHAR(50) NULL comment '数据库用户',
         `host` VARCHAR(100) NULL comment '数据库主机',
+        `fingerprint` TEXT NULL comment 'SQL指纹',
         `query` TEXT NOT NULL comment '执行语句',
         `query_time` FLOAT DEFAULT NULL comment '执行时间',
         `lock_time` FLOAT DEFAULT NULL comment '锁定时间',
