@@ -1,8 +1,8 @@
 import time
-import datetime
 import threading
 import subprocess
 
+from datetime import datetime
 from shutil import which
 
 from mysqlog.parser import SlowQueryLog

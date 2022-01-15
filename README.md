@@ -3,7 +3,7 @@
 MySQLog is command line program used to collect mysql slow query log like Porcona Toolkit's pt-query-digest.
 
 ``` bash
--e, --env TEXT                  The environment of mysql log to collect
+  -e, --env TEXT                  The environment of mysql log to collect
                                   [default: default]
   -u, --user TEXT                 The user of database for collecting
                                   [required]
