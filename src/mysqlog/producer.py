@@ -27,10 +27,11 @@ class SlowQueryLogProducer(threading.Thread):
                 if self.config["since"] and entry["datetime"] < datetime.strptime(
                     self.config["since"], "%Y-%m-%d %H:%M:%S"
                 ):
-                    print("skip: " + str(entry))
+                    print("filter by since: " + str(entry))
                     continue
                 #
                 if self.config["queryTime"] > entry["query_time"]:
+                    print("filter by query_time: " + str(entry))
                     continue
                 #
                 if self.config["fingerprint"] and PT_FINGERPRINT_EXISTS:

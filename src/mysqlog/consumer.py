@@ -30,7 +30,7 @@ class SlowQueryLogConsumer(threading.Thread):
                 #
                 print(entry)
                 #
-                insert_sql = "INSERT IGNORE INTO `mysql_slow_query_log` (`md5`, `env`, `datetime`, `database`, `user`, `host`, `fingerprint`, `query`, `query_time`, `lock_time`, `rows_examined`, `rows_sent`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                insert_sql = "INSERT IGNORE INTO `mysql_slow_query_log` (`md5`, `env`, `datetime`, `database`, `user`, `host`, `fingerprint`, `query`, `query_time`, `lock_time`, `rows_examined`, `rows_sent`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 #
                 cursor.execute(
                     insert_sql,
@@ -41,7 +41,7 @@ class SlowQueryLogConsumer(threading.Thread):
                         entry["database"],
                         entry["user"],
                         entry["host"],
-                        entry["fingerprint"],
+                        entry.get("fingerprint"),
                         entry["query"],
                         entry["query_time"],
                         entry["lock_time"],
